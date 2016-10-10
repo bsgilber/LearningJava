@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Search {
+	
+	public static void main(String[] args) {
+		// create a list
+		List<Integer> list = new ArrayList<Integer>();
+		// fill it with ints
+		for (int i = 1; i < 16; i++){
+			list.add(i);
+		}
+		// print sorted list
+		System.out.println(list);
+		// binary search
+		// returns index of matching integer
+		// if not in list, returns index of closest available int 
+		try{
+			List<Integer> index = binarySearch(list,5);
+			System.out.println(index);
+		}
+		catch (Exception err){
+			System.out.println(err.getMessage());
+			System.out.println("Value not in list");
+		}
+		
+	}	
+	public static List<Integer> binarySearch (List<Integer> in, int find){
+		List<Integer> out = new ArrayList<Integer>();
+
+		int m = (int) Math.floor(in.size()/2);
+		if (in.size() <= 1){
+			return in;
+		}
+		else if(find == in.get(m)){
+			out.add(m);
+		}
+		else if(find < in.get(m)){
+			return binarySearch(in.subList(0, m),find);
+		}
+		else if(find > in.get(m)){
+			return binarySearch(in.subList(m+1, in.size()),find);
+		}
+		return out;
+	}
+}	
