@@ -1,0 +1,80 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class Sorting {
+	
+	public static void main(String[] args) {
+		// create a list
+		List<Integer> list = new ArrayList<Integer>();
+		// fill it with ints
+		for (int i = 1; i < 16; i++){
+			list.add(i);
+		}
+		// shuffle the list
+		Collections.shuffle(list);
+
+		// print unsorted list
+		System.out.println(list);
+		// sort the list
+		List<Integer> test = mergeSort(list);
+		// print the sorted list
+		System.out.println(test);
+	}	
+	public static List<Integer> mergeSort (List<Integer> in){
+		List<Integer> left = new ArrayList<Integer>();
+		List<Integer> right = new ArrayList<Integer>();
+		// checking for the trivial case
+		if(in.size() <= 1){
+			return in;
+		}
+		else{
+			// split the list into sublists
+			for(int i=0; i<in.size();i++){
+				if(i < in.size()/2 ){
+					left.add(in.get(i));
+				}
+				else if (i >= in.size()/2){
+					right.add(in.get(i));
+				}
+			}
+			// iteratively run the mergeSort on each sublist
+			// until the lists are trivially sorted 
+			left = mergeSort(left);
+			right = mergeSort(right);
+			// merge the sublists
+			return merge(left,right);
+		}
+	}
+	
+	public static List<Integer> merge (List<Integer> l, List<Integer> r){
+		List<Integer> result = new ArrayList<Integer>();
+		// takes left and right sublist, examine the first item in each list
+		// order them smallest to largest
+		while(l.isEmpty() == false && r.isEmpty() == false){
+			if(l.get(0) <= r.get(0)){
+				result.add(l.get(0));
+				l.remove(0);
+			}
+			else{
+				result.add(r.get(0));
+				r.remove(0);
+			}	
+		}
+		
+		// the above loop will leave one of the sublist empty
+		// two while loops to add remaining terms to the result list
+		while(l.isEmpty() == false){
+			result.add(l.get(0));
+			l.remove(0);
+		}
+		while(r.isEmpty() == false){
+			result.add(r.get(0));
+			r.remove(0);
+		}
+		
+		// return sorted list
+		return result;
+	}
+}
