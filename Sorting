@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class Sorting {
+	
+	public static void main(String[] args) {
+		// create a list
+		List<Integer> list = new ArrayList<Integer>();
+		// fill it with ints
+		for (int i = 1; i < 16; i++){
+			list.add(i);
+		}
+		// shuffle the list
+		Collections.shuffle(list);
+
+		// print unsorted list
+		System.out.println(list);
+		// sort the list
+		List<Integer> test = mergeSort(list);
+		// print the sorted list
+		System.out.println(test);
+	}	
+	public static List<Integer> mergeSort (List<Integer> in){
+		List<Integer> left = new ArrayList<Integer>();
+		List<Integer> right = new ArrayList<Integer>();
+		if(in.size() <= 1){
+			return in;
+		}
+		else{
+			for(int i=0; i<in.size();i++){
+				if(i < in.size()/2 ){
+					left.add(in.get(i));
+				}
+				else if (i >= in.size()/2){
+					right.add(in.get(i));
+				}
+			}
+			
+			left = mergeSort(left);
+			right = mergeSort(right);
+			return merge(left,right);
+		}
+	}
+	
+	public static List<Integer> merge (List<Integer> l, List<Integer> r){
+		List<Integer> result = new ArrayList<Integer>();
+		while(l.isEmpty() == false && r.isEmpty() == false){
+			if(l.get(0) <= r.get(0)){
+				result.add(l.get(0));
+				l.remove(0);
+			}
+			else{
+				result.add(r.get(0));
+				r.remove(0);
+			}	
+		}
+		while(l.isEmpty() == false){
+			result.add(l.get(0));
+			l.remove(0);
+		}
+		while(r.isEmpty() == false){
+			result.add(r.get(0));
+			r.remove(0);
+		}
+		return result;
+	}
+}
