@@ -25,10 +25,12 @@ public class Sorting {
 	public static List<Integer> mergeSort (List<Integer> in){
 		List<Integer> left = new ArrayList<Integer>();
 		List<Integer> right = new ArrayList<Integer>();
+		// checking for the trivial case
 		if(in.size() <= 1){
 			return in;
 		}
 		else{
+			// split the list into sublists
 			for(int i=0; i<in.size();i++){
 				if(i < in.size()/2 ){
 					left.add(in.get(i));
@@ -37,15 +39,19 @@ public class Sorting {
 					right.add(in.get(i));
 				}
 			}
-			
+			// iteratively run the mergeSort on each sublist
+			// until the lists are trivially sorted 
 			left = mergeSort(left);
 			right = mergeSort(right);
+			// merge the sublists
 			return merge(left,right);
 		}
 	}
 	
 	public static List<Integer> merge (List<Integer> l, List<Integer> r){
 		List<Integer> result = new ArrayList<Integer>();
+		// takes left and right sublist, examine the first item in each list
+		// order them smallest to largest
 		while(l.isEmpty() == false && r.isEmpty() == false){
 			if(l.get(0) <= r.get(0)){
 				result.add(l.get(0));
@@ -56,6 +62,9 @@ public class Sorting {
 				r.remove(0);
 			}	
 		}
+		
+		// the above loop will leave one of the sublist empty
+		// two while loops to add remaining terms to the result list
 		while(l.isEmpty() == false){
 			result.add(l.get(0));
 			l.remove(0);
@@ -64,6 +73,8 @@ public class Sorting {
 			result.add(r.get(0));
 			r.remove(0);
 		}
+		
+		// return sorted list
 		return result;
 	}
 }
